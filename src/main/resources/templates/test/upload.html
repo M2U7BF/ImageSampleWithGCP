@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- ポイント3: formタグに「enctype="multipart/form-data"」追記 -->
+<!--<form th:action="@{/order/test-upload}" method="POST" enctype="multipart/form-data">-->
+<form th:action="@{/upload}" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" id="file">
+    <button type="submit">UPLOAD</button>
+</form>
+
+<div>
+    <p th:text="${message}"></p>
+    <img th:src="${'data:image/png;base64,'+image}" alt="">
+</div>
+
+<!--<th:block th:each="name : ${ {'character_takoyaki_tako.png','character_takoyaki_tako.png','character_takoyaki_tako.png','vegetable_toumorokoshi_corn_wagiri.png'} }">-->
+<th:block th:each="imageDataElem : ${imageData}">
+    <img th:src="@{https://storage.googleapis.com/test_strage00/}+${imageDataElem.name}" alt="">
+    <form th:action="@{/download}" method="get">
+        <input type="hidden" name="file" th:value="${imageDataElem.name}">
+        <input type="submit" value="ダウンロード">
+    </form>
+</th:block>
+
+</body>
+</html>
